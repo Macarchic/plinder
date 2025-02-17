@@ -40,6 +40,7 @@ def ensure_config_loaded():
         return wrapper
     return decorator
 
+@ensure_config_loaded
 def query_index(
     *,
     columns: list[str] | None = None,
