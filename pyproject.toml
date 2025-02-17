@@ -1,5 +1,5 @@
 [project]
-name = "plinder"
+name = "plinder_fork"
 dynamic = ["version"]
 dependencies = [
     "biotite >= 1.0",
