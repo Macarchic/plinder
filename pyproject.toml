@@ -104,7 +104,7 @@ root = "."
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["plinder*"]
+include = ["plinder_fork*"]
 namespaces = false
 
 [tool.setuptools.package-data]
