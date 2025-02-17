@@ -2,7 +2,7 @@
 name = "plinder_fork"
 dynamic = ["version"]
 dependencies = [
-    "biotite >= 0.40.0",
+    "biotite >= 1.0",
     "numpy<2",
     "pandas",
     "typing_extensions",
