@@ -10,8 +10,35 @@ from plinder.core.utils import cpl
 from plinder.core.utils.config import get_config
 from plinder.core.utils.log import setup_logger
 
+import functools
+
+
 LOG = setup_logger(__name__)
 
+def ensure_config_loaded():
+    """
+     Decorator that ensures the configuration (`cfg`) is loaded before the function execution.
+    If `cfg` is provided as an argument, it is used; otherwise, a default configuration is loaded.
+
+    The configuration (`cfg`) should be passed as the `cfg` argument in `query_index`.
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            internal_args = {'cfg'}
+            # Retrieve cfg from arguments if provided, otherwise load default config
+            cfg_file = kwargs.get("cfg", None)
+            cfg = get_config(config_file=cfg_file)
+            LOG.info(f"config: {cfg.data.plinder_iteration}")
+            filtered_kwargs = {k: v for k, v in kwargs.items() if k not in internal_args}
+
+            try:
+                return func(*args, **filtered_kwargs)
+            except Exception as e:
+                LOG.error(f"Сталася непередбачена помилка: {e}", exc_info=True)
+                raise  
+        return wrapper
+    return decorator
 
 def query_index(
     *,
